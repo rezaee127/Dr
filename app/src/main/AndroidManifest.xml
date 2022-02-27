@@ -10,7 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.J23">
         <activity
-            android:name=".DoctorActivity"
+            android:name=".CheckPatientActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConsultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,6 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DoctorActivity"
+            android:exported="true"
+            android:parentActivityName=".Activity1" />
     </application>
 
 </manifest>
