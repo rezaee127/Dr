@@ -9,4 +9,6 @@
     <string name="rttrfg">انتخاب نوع مشاوره</string>
     <string name="DrCall">الان دکتر بهت زنگ می زنه</string>
     <string name="sorry">متاسفانه شما آمادگی صحبت ندارید. در اولین فرصت دوباره تلاش کنید</string>
+    <string name="checkPatientQ2">ایا قبلا جلسه مشاوره با این دکتر داشته اید؟</string>
+    <string name="checkPatientQ3">آیا در صورت نیاز، امکان جلسه حضوری را دارید؟</string>
 </resources>
