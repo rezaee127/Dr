@@ -3,9 +3,9 @@ package ir.sample.doctorproject2
 object Hospital{
     val listOfDoctors = arrayListOf<Doctor>()
     val consultancyList = arrayListOf(
-        Consultancy(1 , 30 , 100000, ConsultancyType.تلفنی),
-        Consultancy(2 , 60 , 250000, ConsultancyType.ویدئویی),
-        Consultancy(3 , 90 , 300000, ConsultancyType.تلفنی)
+        Consultancy(1 , 30 , 100000, ConsultancyType.Phone),
+        Consultancy(2 , 60 , 250000, ConsultancyType.Video),
+        Consultancy(3 , 90 , 300000, ConsultancyType.Phone)
     )
     fun setTestDate(){
         listOfDoctors.clear()
@@ -39,5 +39,5 @@ data class Consultancy (val id : Int,
 )
 
 enum class ConsultancyType{
-    تلفنی , ویدئویی
+    Phone , Video
 }
