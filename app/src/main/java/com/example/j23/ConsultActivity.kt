@@ -98,9 +98,9 @@ class ConsultActivity : AppCompatActivity() {
             val intent = result.data
             val isOk =  intent?.getBooleanExtra("isOk", false)
                 if(isOk==true)
-                    binding.textView.text="الان دکتر بهت زنگ می زنه"
+                    binding.textView.text=getString(R.string.DrCall)
                 else
-                    binding.textView.text="متاسفانه شما آمادگی صحبت ندارید. در اولین فرصت دوباره تلاش کنید"
+                    binding.textView.text=getString(R.string.sorry)
 
         }
     }

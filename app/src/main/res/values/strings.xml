@@ -7,4 +7,6 @@
     <string name="checkPatientQ1">آیا آمادگی صحبت کردن با دکتر را دارید ؟</string>
     <string name="ok">تایید</string>
     <string name="rttrfg">انتخاب نوع مشاوره</string>
+    <string name="DrCall">الان دکتر بهت زنگ می زنه</string>
+    <string name="sorry">متاسفانه شما آمادگی صحبت ندارید. در اولین فرصت دوباره تلاش کنید</string>
 </resources>
