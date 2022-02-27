@@ -97,12 +97,11 @@ class ConsultActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val intent = result.data
             val isOk =  intent?.getBooleanExtra("isOk", false)
-            isOk?.let{
-                if(it)
+                if(isOk==true)
                     binding.textView.text="الان دکتر بهت زنگ می زنه"
                 else
                     binding.textView.text="متاسفانه شما آمادگی صحبت ندارید. در اولین فرصت دوباره تلاش کنید"
-            }
+
         }
     }
 }
