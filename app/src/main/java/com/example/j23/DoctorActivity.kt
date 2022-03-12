@@ -6,18 +6,24 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.j23.databinding.ActivityDoctorBinding
 import ir.sample.doctorproject2.Doctor
 import ir.sample.doctorproject2.Hospital
+import ir.sample.doctorproject2.com.example.j23.SharedViewModel
 
 
 class DoctorActivity : AppCompatActivity() {
     lateinit var binding: ActivityDoctorBinding
+    private lateinit var viewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_doctor)
         binding = ActivityDoctorBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+        viewModel.setTestDate()
 
         initViews()
 
@@ -26,7 +32,7 @@ class DoctorActivity : AppCompatActivity() {
     private fun initViews() {
         val id = intent.getIntExtra("id", 0)
 
-        var doctor = Hospital.getDoctor(id)
+        var doctor = viewModel.hospital.getDoctor(id)
         binding.textViewName.text = doctor?.name
         binding.textViewOnline.text = doctor?.onlineStatus.toString()
         binding.textViewExpertise.text = doctor?.expertise
@@ -59,15 +65,15 @@ class DoctorActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun setConsultancyType() {
 
-        val cons1 = Hospital.consultancyList[0]
+        val cons1 = viewModel.hospital.consultancyList[0]
         binding.consultancy.text = "مشاوره تلفنی ${cons1.time} دقیقه ای "
         binding.price.text = "${cons1.price} تومان "
 
-        val cons2 = Hospital.consultancyList[1]
+        val cons2 =viewModel.hospital.consultancyList[1]
         binding.consultancy2.text = "مشاوره تلفنی ${cons2.time} دقیقه ای "
         binding.price2.text = "${cons2.price} تومان "
 
-        val cons3 = Hospital.consultancyList[2]
+        val cons3 =viewModel.hospital.consultancyList[2]
         binding.consultancy3.text = "مشاوره تلفنی ${cons3.time} دقیقه ای "
         binding.price3.text = "${cons3.price} تومان "
     }

@@ -11,12 +11,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
 import com.example.j23.databinding.ActivityConsultBinding
 import ir.sample.doctorproject2.Hospital
 import ir.sample.doctorproject2.OnlineStatus
+import ir.sample.doctorproject2.com.example.j23.SharedViewModel
 
 class ConsultActivity : AppCompatActivity() {
     lateinit var  binding : ActivityConsultBinding
+    private lateinit var viewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConsultBinding.inflate(layoutInflater)
@@ -26,6 +29,10 @@ class ConsultActivity : AppCompatActivity() {
             var myText = savedInstanceState.getString("textView1Text")
             binding.textView.text = myText
         }
+
+        viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+        viewModel.setTestDate()
+
         initViews()
     }
     override fun onSaveInstanceState(outState: Bundle) {
@@ -39,7 +46,7 @@ class ConsultActivity : AppCompatActivity() {
         if (id == -1){
             binding.textViewDoctorCalls.text = "ٔدکتر شما پیدا نشد"
         }else {
-            var doctor = Hospital.getDoctor(id)
+            var doctor = viewModel.hospital.getDoctor(id)
             if (doctor?.onlineStatus==OnlineStatus.Online) {
                 binding.textViewDoctorCalls.text = " ${doctor?.name} با شما تماس خواهد گرفت"
                 binding.buttonDrCall.isEnabled = true
