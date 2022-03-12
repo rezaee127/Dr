@@ -8,15 +8,18 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
 import com.example.j23.databinding.ActivityConsultBinding
-import ir.sample.doctorproject2.Hospital
-import ir.sample.doctorproject2.OnlineStatus
+import ir.sample.doctorproject2.com.example.j23.ConsultActivityViewModel
+import ir.sample.doctorproject2.com.example.j23.Model.OnlineStatus
+
 
 class ConsultActivity : AppCompatActivity() {
     lateinit var  binding : ActivityConsultBinding
+    private lateinit var viewModel:ConsultActivityViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConsultBinding.inflate(layoutInflater)
@@ -26,6 +29,7 @@ class ConsultActivity : AppCompatActivity() {
             var myText = savedInstanceState.getString("textView1Text")
             binding.textView.text = myText
         }
+
         initViews()
     }
     override fun onSaveInstanceState(outState: Bundle) {
@@ -35,13 +39,14 @@ class ConsultActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun initViews() {
-        var id = intent.getIntExtra("id" , -1)
+        viewModel= ViewModelProvider(this).get(ConsultActivityViewModel::class.java)
+        val id = intent.getIntExtra("id" , -1)
         if (id == -1){
             binding.textViewDoctorCalls.text = "ٔدکتر شما پیدا نشد"
         }else {
-            var doctor = Hospital.getDoctor(id)
+            val doctor = viewModel.hospital1.getDoctor(id)
             if (doctor?.onlineStatus==OnlineStatus.Online) {
-                binding.textViewDoctorCalls.text = " ${doctor?.name} با شما تماس خواهد گرفت"
+                binding.textViewDoctorCalls.text = "میخواهید که ${doctor?.name} با شما تماس بگیرد؟ "
                 binding.buttonDrCall.isEnabled = true
             }else{
                 binding.textViewDoctorCalls.text = " متاسفانه ${doctor?.name} آنلاین نیست "
@@ -49,10 +54,19 @@ class ConsultActivity : AppCompatActivity() {
             }
 
         }
+
+        if(getFromShared_name().isNullOrEmpty() ){
+            binding.editTextName.error="نام را وارد کنید"
+        }
+        if(getFromShared_tel().isNullOrEmpty()){
+            binding.editTextTel.error="تلفن را وارد کنید"
+        }
         binding.buttonDrCall.setOnClickListener {
             getUserNameAndTel()
             openCheckActivity()
         }
+
+
         if (!getFromShared_name().isNullOrEmpty() ){
             binding.editTextName.visibility = View.GONE
         }
@@ -97,10 +111,15 @@ class ConsultActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val intent = result.data
             val isOk =  intent?.getBooleanExtra("isOk", false)
-                if(isOk==true)
-                    binding.textView.text=getString(R.string.DrCall)
-                else
+                if(isOk==true && !getFromShared_tel().isNullOrEmpty()) {
+                    binding.textViewDoctorCalls.visibility = View.INVISIBLE
+                    binding.textView.text = getString(R.string.DrCall)
+                }
+                else{
+                    binding.textViewDoctorCalls.visibility = View.INVISIBLE
                     binding.textView.text=getString(R.string.sorry)
+                }
+
 
         }
     }
