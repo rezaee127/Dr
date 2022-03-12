@@ -3,11 +3,14 @@ package com.example.j23
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import com.example.j23.databinding.Activity1Binding
-import ir.sample.doctorproject2.Hospital
+import ir.sample.doctorproject2.com.example.j23.Activity1VewModel
 
 class Activity1 : AppCompatActivity() {
     lateinit var binding: Activity1Binding
+    private lateinit var viewModel: Activity1VewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_1)
@@ -19,13 +22,13 @@ class Activity1 : AppCompatActivity() {
     }
 
     private fun initViews() {
-        Hospital.setTestDate()
+        viewModel = ViewModelProvider(this).get(Activity1VewModel::class.java)
         val listOfButtons= arrayListOf(binding.button1,binding.button2)
         for (i in listOfButtons.indices) {
-            listOfButtons[i].text = Hospital.listOfDoctors[i].name
+            listOfButtons[i].text = viewModel.listOfDoctor[i].name
 
             listOfButtons[i].setOnClickListener {
-                goToDoctorActivity(Hospital.listOfDoctors[i].id)
+                goToDoctorActivity(viewModel.listOfDoctor[i].id)
             }
         }
 
