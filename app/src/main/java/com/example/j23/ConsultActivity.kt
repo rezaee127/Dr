@@ -55,12 +55,14 @@ class ConsultActivity : AppCompatActivity() {
 
         }
 
-        if(getFromShared_name().isNullOrEmpty() ){
+      /*  if(getFromShared_name().isNullOrEmpty() ){
             binding.editTextName.error="نام را وارد کنید"
         }
         if(getFromShared_tel().isNullOrEmpty()){
             binding.editTextTel.error="تلفن را وارد کنید"
         }
+
+       */
         binding.buttonDrCall.setOnClickListener {
             getUserNameAndTel()
             openCheckActivity()
@@ -111,7 +113,7 @@ class ConsultActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val intent = result.data
             val isOk =  intent?.getBooleanExtra("isOk", false)
-                if(isOk==true && !getFromShared_tel().isNullOrEmpty()) {
+                if(isOk==true ) {
                     binding.textViewDoctorCalls.visibility = View.INVISIBLE
                     binding.textView.text = getString(R.string.DrCall)
                 }
