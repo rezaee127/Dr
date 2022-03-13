@@ -1,6 +1,8 @@
 package ir.sample.doctorproject2
 
+
 class Hospital{
+
     val listOfDoctors = arrayListOf<Doctor>()
     var consultancyList = arrayListOf<Consultancy>()
 
@@ -33,3 +35,4 @@ data class Consultancy (val id : Int,
 enum class ConsultancyType{
     Phone , Video
 }
+

@@ -18,7 +18,7 @@ class Activity1 : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        viewModel.setTestDate()
+
 
         initViews()
 

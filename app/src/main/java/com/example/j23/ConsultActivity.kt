@@ -8,12 +8,11 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isInvisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.j23.databinding.ActivityConsultBinding
-import ir.sample.doctorproject2.Hospital
 import ir.sample.doctorproject2.OnlineStatus
 import ir.sample.doctorproject2.com.example.j23.SharedViewModel
 
@@ -26,12 +25,11 @@ class ConsultActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         if(savedInstanceState!= null){
-            var myText = savedInstanceState.getString("textView1Text")
+            val myText = savedInstanceState.getString("textView1Text")
             binding.textView.text = myText
         }
 
         viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        viewModel.setTestDate()
 
         initViews()
     }
@@ -42,11 +40,11 @@ class ConsultActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun initViews() {
-        var id = intent.getIntExtra("id" , -1)
+        val id = intent.getIntExtra("id" , -1)
         if (id == -1){
             binding.textViewDoctorCalls.text = "ٔدکتر شما پیدا نشد"
         }else {
-            var doctor = viewModel.hospital.getDoctor(id)
+            val doctor = viewModel.hospital.getDoctor(id)
             if (doctor?.onlineStatus==OnlineStatus.Online) {
                 binding.textViewDoctorCalls.text = " ${doctor?.name} با شما تماس خواهد گرفت"
                 binding.buttonDrCall.isEnabled = true
@@ -74,8 +72,8 @@ class ConsultActivity : AppCompatActivity() {
     }
 
     private fun getUserNameAndTel() {
-        var username = binding.editTextName.text.toString()
-        var userTel = binding.editTextTel.text.toString()
+        val username = binding.editTextName.text.toString()
+        val userTel = binding.editTextTel.text.toString()
         saveInShared(username , userTel)
     }
 
@@ -104,11 +102,15 @@ class ConsultActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val intent = result.data
             val isOk =  intent?.getBooleanExtra("isOk", false)
-                if(isOk==true)
+                if(isOk==true){
                     binding.textView.text=getString(R.string.DrCall)
-                else
-                    binding.textView.text=getString(R.string.sorry)
+                    binding.textViewDoctorCalls.isInvisible=true
+                }
 
+                else{
+                    binding.textView.text=getString(R.string.sorry)
+                    binding.textViewDoctorCalls.isInvisible=true
+                }
         }
     }
 }

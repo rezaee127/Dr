@@ -6,6 +6,9 @@ import ir.sample.doctorproject2.*
 class SharedViewModel : ViewModel() {
     var  hospital  = Hospital()
 
+    init {
+        setTestDate()
+    }
 
     fun setTestDate(){
         hospital.listOfDoctors.clear()
@@ -14,7 +17,7 @@ class SharedViewModel : ViewModel() {
         hospital.listOfDoctors.add(Doctor(2 , "دکتر سما احمدی" , OnlineStatus.Online ,
             "روانشناسی و مشاوره" ,"09274569872"))
 
-        hospital.listOfDoctors.clear()
+        hospital.consultancyList.clear()
         hospital.consultancyList = arrayListOf(
             Consultancy(1 , 30 , 100000, ConsultancyType.Phone),
             Consultancy(2 , 60 , 250000, ConsultancyType.Video),
