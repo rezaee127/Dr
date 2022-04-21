@@ -1,12 +1,18 @@
 package com.example.j23
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.example.j23.databinding.Activity1Binding
+import ir.sample.doctorproject2.CustomAdapter
+import ir.sample.doctorproject2.Doctor
 import ir.sample.doctorproject2.Hospital
+import ir.sample.doctorproject2.OnlineStatus
 import ir.sample.doctorproject2.com.example.j23.SharedViewModel
+import java.util.ArrayList
 
 class Activity1 : AppCompatActivity() {
     lateinit var binding: Activity1Binding
@@ -21,8 +27,26 @@ class Activity1 : AppCompatActivity() {
 
 
         initViews()
+        initList()
 
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun initList() {
+        val adapter=CustomAdapter(ArrayList<Doctor>())
+        val recyclerView=findViewById<RecyclerView>(R.id.recyclerView)
+
+        recyclerView.adapter=adapter
+
+        adapter.dataSet=viewModel.hospital.listOfDoctors
+        adapter.notifyDataSetChanged()
+
+        binding.recyclerView.setOnClickListener {
+
+        }
+    }
+
+
 
     private fun initViews() {
         val listOfButtons= arrayListOf(binding.button1,binding.button2)
